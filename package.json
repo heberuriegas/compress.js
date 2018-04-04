@@ -1,0 +1,99 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "compress.js@^1.1.2",
+        "scope": null,
+        "escapedName": "compress.js",
+        "name": "compress.js",
+        "rawSpec": "^1.1.2",
+        "spec": ">=1.1.2 <2.0.0",
+        "type": "range"
+      },
+      "/home/woohoou/workspaces/general/prysmex_frontend"
+    ]
+  ],
+  "_from": "compress.js@>=1.1.2 <2.0.0",
+  "_id": "compress.js@1.1.2",
+  "_inCache": true,
+  "_location": "/compress.js",
+  "_nodeVersion": "8.7.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/compress.js-1.1.2.tgz_1511443954727_0.6832141941413283"
+  },
+  "_npmUser": {
+    "name": "alextanhongpin",
+    "email": "alexander.hongpin@gmail.com"
+  },
+  "_npmVersion": "5.4.2",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "compress.js@^1.1.2",
+    "scope": null,
+    "escapedName": "compress.js",
+    "name": "compress.js",
+    "rawSpec": "^1.1.2",
+    "spec": ">=1.1.2 <2.0.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/compress.js/-/compress.js-1.1.2.tgz",
+  "_shasum": "2c19528a017b7d500673f2df69e66b04074d1464",
+  "_shrinkwrap": null,
+  "_spec": "compress.js@^1.1.2",
+  "_where": "/home/woohoou/workspaces/general/prysmex_frontend",
+  "author": {
+    "name": "alextanhongpin"
+  },
+  "dependencies": {},
+  "description": "A client side JavaScript image compression library",
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-remove-comments": "^2.0.0",
+    "babel-plugin-transform-class-properties": "^6.18.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
+    "babel-preset-babili": "0.0.8",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-3": "^6.17.0",
+    "babili": "0.0.8",
+    "isparta": "^4.0.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
+    "webpack": "^1.14.0"
+  },
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-92bBngXANtmZpyBqO7E5nQMt6TOJtso8FO5fEx85WeF2t/CDAxs8K+KSu8EuLGMZWWMOdxvFf/bsXG7rOPmAyw==",
+    "shasum": "2c19528a017b7d500673f2df69e66b04074d1464",
+    "tarball": "https://registry.npmjs.org/compress.js/-/compress.js-1.1.2.tgz"
+  },
+  "gitHead": "3017ce69bd064f351598100d187305039a1d897d",
+  "keywords": [
+    "javascript",
+    "image",
+    "compression",
+    "base64"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "alextanhongpin",
+      "email": "alexander.hongpin@gmail.com"
+    }
+  ],
+  "name": "compress.js",
+  "optionalDependencies": {},
+  "readme": "<!-- [![Build Status](https://travis-ci.org/alextanhongpin/compress.js.svg?branch=master)](https://travis-ci.org/alextanhongpin/compress.js) -->\n\n# compress.js\nA JavaScript client side image compression. This library uses the Canvas API to compress the image, and thus will not work on the node.js server-side.\n\n### Advantage:\n\n- quick compression on the client-side\n- compress multiple images and convert them to base64 string\n- save data by compressing it on the client-side before sending to the server\n- automatically resize the image to max 1920px (width or height, but mantains the aspect ratio of the images)\n- fix image rotation issue when uploading images from Android an iOS\n\n### NOTE:\n\nThere are several limitations for this library:\n- When working with `image/gif`, the compressed image will no longer animate. \n- When working with `image/png` with transparent background, the compressed image will lose transparency and result in black background.\n\n\n### Installation\n```\nnpm install compress.js --save\n```\n\n### Import\n\n```\nconst Compress = require('compress.js')\n```\n\n\n### Demo\n\nTry out our demo [here](https://compressjs.herokuapp.com/).\n\n### Usage\n\n```javascript\n\n// Initialization\nconst compress = new Compress()\n\n// Attach listener\nconst upload = document.getElementById('upload')\nupload.addEventListener('change', function (evt) {\n  const files = [...evt.target.files]\n  compress.compress(files, {\n    size: 4, // the max size in MB, defaults to 2MB\n    quality: .75, // the quality of the image, max is 1,\n    maxWidth: 1920, // the max width of the output image, defaults to 1920px\n    maxHeight: 1920, // the max height of the output image, defaults to 1920px\n    resize: true, // defaults to true, set false if you do not want to resize the image width and height\n  }).then((data) => {\n    // returns an array of compressed images\n  })\n}, false)\n\n\n// or simpler\ncompress.attach('#upload', {\n  size: 4,\n  quality: .75\n}).then((data) => {\n  // do something with the compressed image\n})\n```\n\n```javascript\n// example output\n[{\n  alt: '10mb-image.jpg',\n  data: '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBD...',\n  elapsedTimeInSeconds: 1.9292250000000004,\n  endHeightInPx: 1280,\n  endSizeInMb: 0.44418832116788315,\n  endWidthInPx: 1920, \n  ext: 'image/jpeg',\n  initialHeightInPx: 3744,\n  initialSizeInMb: 8.989774,\n  initialWidthInPx: 5616,\n  iterations: 1,\n  prefix: 'data:jpeg;base64,'\n  quality: 0.75,\n  sizeReducedInPercent: 95.058960089899,\n}]\n```\n\nYou can even convert the compressed base64 string to a file before uploading to the server:\n\n```javascript\ncompress.attach('#upload', {\n  size: 4,\n  quality: .75\n}).then((results) => {\n  // Example mimes:\n  // image/png, image/jpeg, image/jpg, image/gif, image/bmp, image/tiff, image/x-icon,  image/svg+xml, image/webp, image/xxx, image/png, image/jpeg, image/webp\n  // If mime is not provided, it will default to image/jpeg\n  const img1 = results[0]\n  const base64str = img1.data\n  const imgExt = img1.ext\n  const file = Compress.convertBase64ToFile(base64str, imgExt)\n  // -> Blob {size: 457012, type: \"image/png\"}\n})\n```\n\n\nTODO: Add d.ts to support typescript\n",
+  "readmeFilename": "README.md",
+  "scripts": {
+    "test": "babel-node ./node_modules/.bin/isparta cover node_modules/.bin/_mocha -- --ui bdd -R spec --recursive --watch",
+    "webpack": "webpack --config webpack.config.js --watch"
+  },
+  "version": "1.1.2"
+}
